@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>लॉगिन करें</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0effe;font-family:"Poppins",sans-serif;padding:1.5rem;}
+    .card{background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(83,74,183,0.13);padding:2.8rem 2.2rem 2.2rem;width:100%;max-width:400px;animation:fadeUp 0.5s ease both;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    .logo{width:44px;height:44px;border-radius:12px;background:#534ab7;display:flex;align-items:center;justify-content:center;margin-bottom:1.4rem;}
+    .logo svg{width:22px;height:22px;fill:white;}
+    h1{font-size:1.6rem;font-weight:600;color:#1a1533;margin-bottom:4px;}
+    .subtitle{font-size:0.875rem;color:#7b7a8e;margin-bottom:1.8rem;}
+    .info-chip{background:#eeecfd;color:#534ab7;font-size:0.8rem;border-radius:10px;padding:8px 14px;margin-bottom:1.6rem;line-height:1.6;}
+    label{display:block;font-size:0.8rem;color:#7b7a8e;margin-bottom:6px;}
+    .phone-row{display:flex;gap:8px;}
+    .code-box{width:64px;height:44px;border:1.5px solid #e0ddf8;border-radius:10px;background:#f7f6ff;color:#1a1533;font-size:0.9rem;text-align:center;outline:none;}
+    input[type="tel"]{flex:1;height:44px;padding:0 14px;border:1.5px solid #e0ddf8;border-radius:10px;background:#f7f6ff;color:#1a1533;font-size:0.9rem;outline:none;transition:border 0.15s,box-shadow 0.15s;}
+    input[type="tel"]:focus{border-color:#7f77dd;box-shadow:0 0 0 3px rgba(127,119,221,0.18);background:#fff;}
+    .send-btn{width:100%;height:44px;margin-top:1.2rem;background:#f0effe;color:#534ab7;border:1.5px solid #c5c0f0;border-radius:10px;font-size:0.95rem;font-family:"Poppins",sans-serif;font-weight:500;cursor:pointer;transition:background 0.15s;}
+    .send-btn:hover{background:#e4e0fc;}
+    .send-btn.sent{background:#e6f9f0;color:#1a7f5a;border-color:#a3e6cc;cursor:default;}
+    .send-btn:disabled{opacity:0.7;cursor:not-allowed;}
+    .otp-section{display:none;margin-top:1.4rem;}
+    .otp-section.show{display:block;animation:fadeUp 0.3s ease both;}
+    .otp-label{font-size:0.8rem;color:#7b7a8e;margin-bottom:10px;}
+    .otp-boxes{display:flex;gap:12px;justify-content:center;margin-bottom:10px;}
+    .otp-box{width:56px;height:58px;border:1.5px solid #e0ddf8;border-radius:12px;background:#f7f6ff;color:#1a1533;font-size:1.5rem;font-weight:600;text-align:center;outline:none;transition:border 0.15s,box-shadow 0.15s;}
+    .otp-box:focus{border-color:#7f77dd;box-shadow:0 0 0 3px rgba(127,119,221,0.18);background:#fff;}
+    .otp-box.filled{border-color:#534ab7;background:#eeedfd;}
+    .resend{font-size:0.78rem;color:#a0a0b0;text-align:center;margin-top:8px;}
+    .resend a{color:#534ab7;text-decoration:none;cursor:pointer;}
+    .resend a.disabled{color:#b0afc8;pointer-events:none;}
+    .login-btn{width:100%;height:46px;margin-top:1.2rem;background:#534ab7;color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:600;font-family:"Poppins",sans-serif;cursor:pointer;display:none;transition:background 0.15s,transform 0.1s;}
+    .login-btn.show{display:block;animation:fadeUp 0.3s ease both;}
+    .login-btn:hover{background:#7f77dd;}
+    .login-btn:active{transform:scale(0.98);}
+    .login-btn:disabled{opacity:0.7;cursor:not-allowed;}
+    .error-msg{display:none;background:#ffeaea;color:#c0392b;font-size:0.8rem;border-radius:8px;padding:8px 12px;margin-top:10px;text-align:center;}
+    .error-msg.show{display:block;}
+    .divider{display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem;}
+    .divider::before,.divider::after{content:"";flex:1;height:1px;background:#e8e6f8;}
+    .divider span{font-size:0.78rem;color:#b0afc8;}
+    .signup{text-align:center;font-size:0.82rem;color:#9898aa;}
+    .signup a{color:#534ab7;text-decoration:none;font-weight:500;}
+    .success-msg{display:none;text-align:center;padding:1.5rem 0;animation:fadeUp 0.4s ease both;}
+    .success-msg .check{width:56px;height:56px;border-radius:50%;background:#e6f9f0;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.6rem;}
+    .success-msg h2{font-size:1.1rem;color:#1a7f5a;margin-bottom:6px;}
+    .success-msg p{font-size:0.85rem;color:#7b7a8e;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div id="formSection">
+      <h1>नमस्ते! 🙏</h1>
+      <p class="subtitle">अपने खाते में प्रवेश करें</p>
+      <div class="info-chip">📱 आपके मोबाइल नंबर पर OTP भेजा जाएगा</div>
+      <label>मोबाइल नंबर</label>
+      <div class="phone-row">
+        <input class="code-box" type="text" value="+91" readonly/>
+        <input type="tel" id="phone" placeholder="10 अंकों का नंबर" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendOTP()">OTP भेजें →</button>
+      <div class="otp-section" id="otpSection">
+        <p class="otp-label">OTP दर्ज करें (आपके नंबर पर भेजा गया)</p>
+        <div class="otp-boxes">
+          <input class="otp-box" type="tel" maxlength="1" id="o1" oninput="moveNext(this,'o2')"/>
+          <input class="otp-box" type="tel" maxlength="1" id="o2" oninput="moveNext(this,'o3')" onkeydown="movePrev(event,'o1')"/>
+          <input class="otp-box" type="tel" maxlength="1" id="o3" oninput="moveNext(this,'o4')" onkeydown="movePrev(event,'o2')"/>
+          <input class="otp-box" type="tel" maxlength="1" id="o4" oninput="checkFull()" onkeydown="movePrev(event,'o3')"/>
+        </div>
+        <p class="resend">OTP नहीं मिला? <a id="resendLink" class="disabled" onclick="sendOTP(true)">पुनः भेजें</a> <span id="timerText" style="color:#b0afc8"></span></p>
+      </div>
+      <div class="error-msg" id="errorMsg"></div>
+      <button class="login-btn" id="loginBtn" onclick="verifyOTP()">✓ लॉगिन करें</button>
+      <div class="divider"><span>या</span></div>
+      <p class="signup">नया खाता बनाएं? <a href="#">यहाँ क्लिक करें</a></p>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <div class="check">✅</div>
+      <h2>लॉगिन सफल हो गया!</h2>
+      <p>आपका स्वागत है। आप अब अपने खाते में हैं।</p>
+    </div>
+  </div>
+  <script>
+    let timerInterval, secs=30;
+    async function sendOTP(isResend=false){
+      const phone=document.getElementById("phone").value;
+      if(phone.length!==10){showError("कृपया 10 अंकों का सही मोबाइल नंबर दर्ज करें।");return;}
+      const btn=document.getElementById("sendBtn");
+      btn.disabled=true;btn.textContent="भेज रहे हैं...";
+      try{
+        const response=await fetch("/send-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
+        const data=await response.json();
+        if(data.success){
+          hideError();btn.textContent="✓ OTP भेजा गया — +91 "+phone;btn.classList.add("sent");
+          document.getElementById("otpSection").classList.add("show");
+          document.getElementById("loginBtn").classList.add("show");
+          if(isResend){["o1","o2","o3","o4"].forEach(id=>{document.getElementById(id).value="";document.getElementById(id).classList.remove("filled");});}
+          document.getElementById("o1").focus();startTimer();
+        }else{btn.disabled=false;btn.textContent="OTP भेजें →";showError(data.message);}
+      }catch(e){btn.disabled=false;btn.textContent="OTP भेजें →";showError("Server से connection नहीं हो पाया।");}
+    }
+    async function verifyOTP(){
+      const phone=document.getElementById("phone").value;
+      const otp=["o1","o2","o3","o4"].map(id=>document.getElementById(id).value).join("");
+      if(otp.length<4){showError("कृपया 4 अंकों का OTP दर्ज करें।");return;}
+      const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="जाँच रहे हैं...";
+      try{
+        const response=await fetch("/verify-otp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone,otp})});
+        const data=await response.json();
+        if(data.success){document.getElementById("formSection").style.display="none";document.getElementById("successMsg").style.display="block";}
+        else{btn.disabled=false;btn.textContent="✓ लॉगिन करें";showError(data.message);}
+      }catch(e){btn.disabled=false;btn.textContent="✓ लॉगिन करें";showError("Server से connection नहीं हो पाया।");}
+    }
+    function startTimer(){secs=30;const link=document.getElementById("resendLink");link.classList.add("disabled");clearInterval(timerInterval);timerInterval=setInterval(()=>{document.getElementById("timerText").textContent="("+secs+"s)";secs--;if(secs<0){clearInterval(timerInterval);document.getElementById("timerText").textContent="";link.classList.remove("disabled");}},1000);}
+    function moveNext(el,nextId){el.value=el.value.replace(/[^0-9]/g,"");if(el.value.length===1){el.classList.add("filled");if(nextId)document.getElementById(nextId).focus();}else el.classList.remove("filled");}
+    function checkFull(){const el=document.getElementById("o4");el.value=el.value.replace(/[^0-9]/g,"");el.value?el.classList.add("filled"):el.classList.remove("filled");}
+    function movePrev(e,prevId){if(e.key==="Backspace"&&e.target.value==="")document.getElementById(prevId).focus();}
+    function showError(msg){const el=document.getElementById("errorMsg");el.textContent=msg;el.classList.add("show");}
+    function hideError(){document.getElementById("errorMsg").classList.remove("show");}
+  </script>
+</body>
+</html>
